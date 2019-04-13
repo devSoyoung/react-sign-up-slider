@@ -1,28 +1,48 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from 'react';
+import SignUp from './SignUp';
+import SignIn from './SignIn';
+import Overlay from './Overlay';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+interface State {
+    rightPanelActive: boolean,
+}
+
+class App extends Component<{}, State> {
+    constructor() {
+        // @ts-ignore
+        super();
+        this.state = {
+            rightPanelActive: false,
+        }
+    }
+
+    handleClickSignUpButton = () => this.setState({
+        rightPanelActive: true,
+    });
+
+    handleClickSignInButton = () => this.setState({
+        rightPanelActive: false,
+    });
+
+    render() {
+        const { handleClickSignUpButton, handleClickSignInButton } = this;
+        const { rightPanelActive } = this.state;
+        return (
+            <div className="App">
+                <div
+                    className={`container ${rightPanelActive ? `right-panel-active` : ``}`}
+                    id="container"
+                >
+                    <SignUp />
+                    <SignIn />
+                    <Overlay
+                        handleClickSignInButton={handleClickSignInButton}
+                        handleClickSignUpButton={handleClickSignUpButton}
+                    />
+                </div>
+            </div>
+        );
+    }
 }
 
 export default App;
