@@ -19,7 +19,7 @@ h1 {
     letter-spacing: -0.5px;
 }
 
-a:hover {
+.find-password:hover {
     color: #ff4b2b;
 }
 
@@ -37,20 +37,20 @@ a:hover {
     margin-top: 30px;
 }
 
-button:active {
+.form-button:active {
     transform: scale(0.95);
 }
 
-button:focus {
+.form-button:focus {
     outline: none;
 }
 
-button.ghost {
+.form-button.ghost {
     background-color: transparent;
     border-color: #ffffff;
 }
 
-form {
+.form {
     background-color: #ffffff;
     display: flex;
     align-items: center;

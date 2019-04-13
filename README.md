@@ -1,23 +1,180 @@
-# Sign-in Slider 프로젝트
+# sign-in/up Slider 프로젝트
 아래 참고링크의 포스팅을 보고 로그인, 회원가입 영역을 슬라이드로 전환하는 로그인 페이지를 리액트로 바꾸어서 제작해보았음.
 
 * React.js
 * Typescript
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/42922453/56078390-72d56f00-5e22-11e9-984e-a7a24330848c.gif">
+</p>
 
 ## Layout 구성하기
 레이아웃은 크게 회원가입 영역(sign-up), 로그인 영역(sign-in), 오버레이 영역(overlay)로 구성
 
 ### 회원가입 Component(sign-up)
 타이틀, 가입 정보 입력, 가입 버튼으로 구성
+```jsx
+import React, { Component } from 'react';
 
-### 로그인 Component(sign-up)
+class SignUp extends Component {
+    render() {
+        return (
+            <div className="form-container sign-up-container">
+                <form action="#">
+                    <h1 className="form-title">Hello, Friend!</h1>
+
+                    <input type="text" placeholder="이름" />
+                    <input type="email" placeholder="이메일" />
+                    <input type="password" placeholder="패스워드" />
+                    <button className="form-button">sign up</button>
+                </form>
+            </div>
+        );
+    }
+}
+
+export default SignUp;
+
+```
+
+### 로그인 Component(sign-in)
 타이틀, 로그인 정보 입력, 로그인 버튼으로 구성
+```jsx
+import React, { Component } from 'react';
 
-### 오버레이 Component(sign-up)
+class SignIn extends Component {
+    render() {
+        return (
+            <div className="form-container sign-in-container">
+                <form action="#">
+                    <h1 className="form-title">Welcome Back!</h1>
+
+                    <input type="email" placeholder="이메일" />
+                    <input type="password" placeholder="패스워드" />
+
+                    <button className="form-button">sign in</button>
+                    <a className="find-password" href="#">패스워드 찾기</a>
+                </form>
+            </div>
+        );
+    }
+}
+
+export default SignIn;
+
+```
+
+### 오버레이 Component
 로그인/회원가입 각 영역이 활성화 되었을 때, 반대편에 뜰 메세지로 구성
+
+```jsx
+import React, { Component } from 'react';
+
+interface Props {
+    handleClickSignUpButton(event: any): void;
+    handleClickSignInButton(event: any): void;
+}
+
+class Overlay extends Component<Props> {
+    render() {
+        const { handleClickSignUpButton, handleClickSignInButton } = this.props;
+        return (
+            <div className="overlay-container">
+                <div className="overlay">
+                    <div className="overlay-panel overlay-left">
+                        <h1>Welcome Back!</h1>
+                        <p className="overlay-description">
+                            이미 가입한 회원이시라면,<br/>
+                            로그인 후 더 많은 서비스를 이용할 수 있습니다.
+                        </p>
+                        <button
+                            className="ghost form-button"
+                            id="signIn"
+                            onClick={handleClickSignInButton}
+                        >Sign In</button>
+                    </div>
+                    <div className="overlay-panel overlay-right">
+                        <h1>Hello, Friend!</h1>
+                        <p className="overlay-description">
+                            아직 회원이 아니시라면,<br/>
+                            가입 후 더 많은 서비스를 이용할 수 있습니다.
+                        </p>
+                        <button
+                            className="ghost form-button"
+                            id="signUp"
+                            onClick={handleClickSignUpButton}
+                        >Sign Up</button>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+}
+
+export default Overlay;
+```
+
+* 각 영역 버튼의 `onclick` 핸들러를 부모 컴포넌트에서 props로 전달받아서 연결
+* typescript를 사용하기 때문에, interface로 props를 정의해주었음
+* `overlay-left`, `overlay-right`로 각각 회원가입, 로그인 페이지에 대한 사이드 화면을 가짐
+
+> 지금 보니까 event handler도 props로 전달받기 때문에, 함수형 컴포넌트로 제작해도 됐을 것 같다. 나중에 수정하자!
 
 ### 로그인 Component
 여기에서는 따로 Login Component를 만들지 않았지만, 다른 곳에서 가져다쓴다면 `App.tsx`를 `Login.tsx`로 바꾸어서 필요한 곳에서 사용하면 됨
+
+```jsx
+import React, {Component} from 'react';
+import './App.css';
+import SignUp from './SignUp';
+import SignIn from './SignIn';
+import Overlay from './Overlay';
+
+interface State {
+    rightPanelActive: boolean,
+}
+
+class App extends Component<{}, State> {
+    constructor() {
+        // @ts-ignore
+        super();
+        this.state = {
+            rightPanelActive: false,
+        }
+    }
+
+    handleClickSignUpButton = () => this.setState({
+        rightPanelActive: true,
+    });
+
+    handleClickSignInButton = () => this.setState({
+        rightPanelActive: false,
+    });
+
+    render() {
+        const { handleClickSignUpButton, handleClickSignInButton } = this;
+        const { rightPanelActive } = this.state;
+        return (
+            <div className="App">
+                <div
+                    className={`container ${rightPanelActive ? `right-panel-active` : ``}`}
+                    id="container"
+                >
+                    <SignUp />
+                    <SignIn />
+                    <Overlay
+                        handleClickSignInButton={handleClickSignInButton}
+                        handleClickSignUpButton={handleClickSignUpButton}
+                    />
+                </div>
+            </div>
+        );
+    }
+}
+
+export default App;
+
+```
 
 * 버튼 클릭은 하위 컴포넌트(`<Overlay>`)에서 발생하지만, state에 따라 container의 클래스명을 조절해야 함
 * `<Overlay>`에서 사용할 onclick 이벤트 핸들러를 정의하고, props로 전달

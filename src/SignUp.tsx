@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 
-// TODO: 소셜 로그인 영역 추가하기
-
 class SignUp extends Component {
     render() {
         return (
             <div className="form-container sign-up-container">
-                <form action="#">
+                <form className="form" action="#">
                     <h1 className="form-title">Hello, Friend!</h1>
 
                     <input type="text" placeholder="이름" />
