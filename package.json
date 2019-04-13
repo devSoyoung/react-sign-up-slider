@@ -1,5 +1,5 @@
 {
-  "name": "sign-in-slider",
+  "name": "react-sign-in-slider",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -26,5 +26,18 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "description": "Change sign-in/up page with slide animation (react.js)",
+  "main": "index.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devSoyoung/react-sign-up-slide.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/devSoyoung/react-sign-up-slide/issues"
+  },
+  "homepage": "https://github.com/devSoyoung/react-sign-up-slide#readme"
 }
