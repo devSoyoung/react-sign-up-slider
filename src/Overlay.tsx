@@ -13,18 +13,24 @@ class Overlay extends Component<Props> {
                 <div className="overlay">
                     <div className="overlay-panel overlay-left">
                         <h1>Welcome Back!</h1>
-                        <p>To keep connected with us please login with your personal info</p>
+                        <p className="overlay-description">
+                            이미 가입한 회원이시라면,<br/>
+                            로그인 후 더 많은 서비스를 이용할 수 있습니다.
+                        </p>
                         <button
-                            className="ghost"
+                            className="ghost form-button"
                             id="signIn"
                             onClick={handleClickSignInButton}
                         >Sign In</button>
                     </div>
                     <div className="overlay-panel overlay-right">
                         <h1>Hello, Friend!</h1>
-                        <p>Enter your personal details and start journey with us</p>
+                        <p className="overlay-description">
+                            아직 회원이 아니시라면,<br/>
+                            가입 후 더 많은 서비스를 이용할 수 있습니다.
+                        </p>
                         <button
-                            className="ghost"
+                            className="ghost form-button"
                             id="signUp"
                             onClick={handleClickSignUpButton}
                         >Sign Up</button>
